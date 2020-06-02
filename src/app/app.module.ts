@@ -3,12 +3,14 @@ import { BrowserModule } from "@angular/platform-browser";
 import { FormsModule } from "@angular/forms";
 
 import { AppComponent } from "./app.component";
-import { HelloComponent } from "./hello.component";
 import { MatToolbarModule } from "@angular/material/toolbar";
+import { MatInputModule } from "@angular/material/input";
+
+const material = [MatToolbarModule, MatInputModule];
 
 @NgModule({
-  imports: [BrowserModule, FormsModule, MatToolbarModule],
-  declarations: [AppComponent, HelloComponent],
+  imports: [BrowserModule, FormsModule, material],
+  declarations: [AppComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
