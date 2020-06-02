@@ -18,7 +18,7 @@ export class SearchService {
   searchQuery = new BehaviorSubject<string>(null);
   isEnhanced = new BehaviorSubject<boolean>(false);
 
-  // TODO: fill below in with your server url (e.g.: localhost)
+  // TODO: fill below in with your elastic search url (e.g.: localhost)
   serverUrl = null;
 
   constructor(private httpClient: HttpClient) {
@@ -40,32 +40,28 @@ export class SearchService {
   }
 
   private searchDocuments(query: string) {
-    if (this.serverUrl) {
-      return this.httpClient.get(
-        `http://${this.serverUrl}/?query=${query}&enhanced=${
-          this.isEnhanced.value
-        }`
-      );
-    } else {
-      if (!this.isEnhanced.value) {
-        return of({
+    const searchQuery = this.isEnhanced.value
+      ? {
+          query: {
+            multi_match: {
+              query,
+              fields: ["alineas", "tags^10"]
+            }
+          }
+        }
+      : {
           query: {
             multi_match: {
               query,
               fields: ["alineas"]
             }
           }
-        });
-      } else {
-        return of({
-          query: {
-            multi_match: {
-              query,
-              fields: ["alineas", "tags"]
-            }
-          }
-        });
-      }
+        };
+
+    if (this.serverUrl) {
+      return this.httpClient.post(`http://${this.serverUrl}/`, searchQuery);
+    } else {
+      return of(searchQuery);
     }
   }
 }
