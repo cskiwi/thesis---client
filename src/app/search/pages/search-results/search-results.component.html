@@ -1,3 +1,4 @@
-<code>
-  <pre>{{ this.results$ | async }}</pre>
+<code *ngIf="this.results$ | async as results">
+  To Query:
+  <pre>{{ results | json }}</pre>
 </code>
