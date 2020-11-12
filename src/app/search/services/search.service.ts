@@ -59,7 +59,10 @@ export class SearchService {
         };
 
     if (this.serverUrl) {
-      return this.httpClient.post(`http://${this.serverUrl}/`, searchQuery);
+      return this.httpClient.post(
+        `http://${this.serverUrl}/_search`,
+        searchQuery
+      );
     } else {
       return of(searchQuery);
     }
