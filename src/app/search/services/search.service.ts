@@ -19,7 +19,7 @@ export class SearchService {
   isEnhanced = new BehaviorSubject<boolean>(false);
 
   // TODO: fill below in with your elastic search url (e.g.: localhost)
-  serverUrl = null;
+  serverUrl = "localhost:9200";
 
   constructor(private httpClient: HttpClient) {
     this.searchResults$ = this.searchQuery.pipe(
